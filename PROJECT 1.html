@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Trip Booking Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f6fb;
+      padding: 32px;
+    }
+    form {
+      background: #fff;
+      padding: 24px;
+      border-radius: 8px;
+      max-width: 350px;
+      margin: auto;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    label { 
+      display: block; 
+      margin-bottom: 8px; 
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      margin-bottom: 16px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    input[type="submit"] {
+      background: #2c7dfa;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    input[type="submit"]:hover {
+      background: #055add;
+    }
+    #confirmation {
+      margin-top: 18px;
+      color: green;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h2>Book Your Trip</h2>
+  <form id="bookingForm">
+    <label>Full Name*:<br>
+      <input type="text" name="fullname" required>
+    </label>
+    <label>Email Address*:<br>
+      <input type="email" name="email" required>
+    </label>
+    <label>Destination*:<br>
+      <select name="destination" required>
+        <option value="">Select</option>
+        <option>Goa</option>
+        <option>Shimla</option>
+        <option>Guwahati</option>
+      </select>
+    </label>
+    <label>Arrival Date*:<br>
+      <input type="date" name="arrivaldate" required>
+    </label>
+    <label>Number of Persons*:<br>
+      <input type="number" name="guests" min="1" required>
+    </label>
+    <input type="submit" value="Book Now">
+  </form>
+  <div id="confirmation"></div>
+
+  <script>
+    document.getElementById('bookingForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const name = this.fullname.value;
+      const email = this.email.value;
+      const destination = this.destination.value;
+      const date = this.arrivaldate.value;
+      const guests = this.guests.value;
+
+      // Simple validation for date not in the past
+      const today = new Date().toISOString().split('T')[0];
+      if (date < today) {
+        alert("Arrival date cannot be in the past!");
+        return;
+      }
+
+      // Confirmation message
+      document.getElementById('confirmation').textContent =
+        `Thank you, ${name}! Your trip to ${destination} on ${date} for ${guests} person(s) is booked. A confirmation has been sent to ${email}.`;
+
+      this.reset();
+    });
+  </script>
+</body>
+</html>
